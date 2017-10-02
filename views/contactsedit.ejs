@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title><%= title%></title>
+    </head>
+
+    <body>
+        <form class="" action="/contacts/edit/<%=data.id%>" method="POST">
+            <input type="text" name="name" placeholder="Name" value="<%=data.name%>">
+            <input type="text" name="company" placeholder="Company" value="<%=data.company%>">
+            <input type="text" name="telp" placeholder="Telephone" value="<%=data.telp%>">
+            <input type="text" name="email" placeholder="Email" value="<%=data.email%>">
+            <input type="submit" value="SUBMIT">
+        </form>
+    </body>
+</html>
