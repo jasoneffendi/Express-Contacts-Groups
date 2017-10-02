@@ -14,13 +14,23 @@ db.serialize(() => {
   })
 
   db.run(`CREATE TABLE IF NOT EXISTS profile (id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username VARCHAR(100), password VARCHAR(20))`,() => {
+    username VARCHAR(100), password VARCHAR(255), name VARCHAR(255), idContacts INTEGER UNIQUE, FOREIGN KEY (idContacts) REFERENCES
+    contacts(id))`,() => {
     console.log('Create Table User Profile Berhasil');
   })
 
   db.run(`CREATE TABLE IF NOT EXISTS addresses (id INTEGER PRIMARY KEY AUTOINCREMENT,
-    street VARCHAR(100), city VARCHAR(50), zipcode INTEGER)`,() => {
+    street VARCHAR(100), city VARCHAR(50), zipcode INTEGER, idContacts INTEGER, name VARCHAR(250), FOREIGN KEY (idContacts) REFERENCES
+    contacts(id))`,() => {
     console.log('Create Table User Address Berhasil');
   })
 
+  db.run(`CREATE TABLE IF NOT EXISTS contactAddress
+  (
+      contactAddress INTEGER PRIMARY KEY NOT NULL,
+      contactId INTEGER REFERENCES contacts(id),
+      addressId INTEGER REFERENCES addresses(id)
+  )`, () => {
+    console.log('CREATE TABLE contactsAddress Berhasil')
+  })
 })

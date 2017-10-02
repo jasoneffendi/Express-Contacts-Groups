@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title><%= title%></title>
+        <title></title>
     </head>
 
     <body>
@@ -14,25 +14,34 @@
                     <th>ID</th>
                     <th>Username</th>
                     <th>Password</th>
+                    <th>Contact ID</th>
+                    <th>Contact Name</th>
                 </tr>
             </thead>
             <tbody>
-                <% data.forEach( row => { %>
+                <% if(data) {data.forEach( row => { %>
                 <tr>
                     <td><%=row.id%></td>
                     <td><%=row.username%></td>
                     <td><%=row.password%></td>
+                    <td><%=row.idContacts%></td>
+                    <td><%=row.name%></td>
                     <td>
                         <a href="/profile/edit/<%=row.id%>">Edit</a>
                         <a href="/profile/delete/<%=row.id%>">Delete</a>
                     </td>
                 </tr>
-                <% })%>
+                <% })}%>
             </tbody>
         </table>
         <form class="" action="/profile" method="POST">
             <input type="text" name="username" placeholder="Username">
             <input type="text" name="password" placeholder="Password">
+            <select name="idContacts">
+                <% if(dataContact) { dataContact.forEach( data => { %>         
+                    <option value="<%=data.id%>,<%=data.name%>"><%=data.name%></option>
+                <% })} %>
+            </select>
             <input type="submit" value="SUBMIT">
         </form>
     </body>

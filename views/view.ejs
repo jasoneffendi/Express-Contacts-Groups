@@ -17,6 +17,7 @@
                     <th>Zipcode</th>
                     <th>Contact ID</th>
                     <th>Contact Name</th>
+                    <th>Company Name</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,8 +27,9 @@
                     <td><%=row.street%></td>
                     <td><%=row.city%></td>
                     <td><%=row.zipcode%></td>
-                    <td><%=row.idContacts%></td>
+                    <td><%=row.id%></td>
                     <td><%=row.name%></td>
+                    <td><%=row.company%></td>
                     <td>
                         <a href="/addresses/edit/<%=row.id%>">Edit</a>
                         <a href="/addresses/delete/<%=row.id%>">Delete</a>
@@ -36,16 +38,5 @@
                 <% })}%>
             </tbody>
         </table>
-        <form class="" action="/addresses" method="POST">
-            <input type="text" name="street" placeholder="Street">
-            <input type="text" name="city" placeholder="City">
-            <input type="text" name="zipcode" placeholder="Zipcode">
-            <select name="idContacts">
-                <% if(dataContact) { dataContact.forEach( data => { %>         
-                    <option value="<%=data.id%>"><%=data.name%></option>
-                <% })} %>
-            </select>
-            <input type="submit" value="SUBMIT">
-        </form>
     </body>
 </html>
