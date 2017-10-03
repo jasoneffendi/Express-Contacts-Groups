@@ -13,6 +13,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Name of the Group</th>
+                    <th>Group Members
                 </tr>
             </thead>
             <tbody>
@@ -20,9 +21,11 @@
                 <tr>
                     <td><%=row.id%></td>
                     <td><%=row.name_of_group%></td>
+                    <td><%=row.members%></td>
                     <td>
                         <a href="/groups/edit/<%=row.id%>">Edit</a>
                         <a href="/groups/delete/<%=row.id%>">Delete</a>
+                        <a href="/groups/assign/<%=row.id%>">Assign</a>
                     </td>
                 </tr>
                 <% })%>

@@ -103,6 +103,7 @@ class Address {
     getContactName() {
         modelContacts.selectById(this.id,(datas) => {
             return this.name = datas[0].name
+            // return this.name = 'Halo'
         })
     }
 

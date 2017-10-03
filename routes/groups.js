@@ -1,10 +1,12 @@
 let express = require('express')
 let router = express.Router()
 let modelGroups = require('../models/groups.js')
+let modelContacts = require('../models/contact.js')
 
 router.get('/', (req,res) => {
     modelGroups.getAllGroup((rows) => {
-        res.render('groups',{data: rows, title: 'Halaman Groups'})
+        // res.render('groups',{data: rows, title: 'Halaman Groups'})
+        res.send(rows)
     })
 })
 
@@ -33,5 +35,22 @@ router.post('/edit/:id', (req, res) => {
         res.redirect('/groups')
     })
 })
+
+router.get('/assign/:id', (req,res) => {
+    modelGroups.selectByGroupId(req.params.id, (rows) => {
+        modelContacts.getAll((rowsContact) => {
+            res.render('assignGroup', {dataGroup: rows, dataContact: rowsContact})            
+        })
+    })
+})
+
+router.post('/assign/:id', (req,res) => {
+    modelGroups.assignGroup(req.body, req.params.id, () => {
+        console.log(req.body.contactId)
+        res.redirect('/groups')
+    })
+})
+
+
 
 module.exports = router

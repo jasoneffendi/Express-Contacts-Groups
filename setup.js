@@ -9,7 +9,7 @@ db.serialize(() => {
   })
 
   db.run(`CREATE TABLE IF NOT EXISTS groups (id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name_of_group VARCHAR(200))`,() => {
+    name_of_group VARCHAR(200), members VARCHAR(255))`,() => {
     console.log('Create Table User Groups Berhasil');
   })
 
@@ -25,12 +25,19 @@ db.serialize(() => {
     console.log('Create Table User Address Berhasil');
   })
 
-  db.run(`CREATE TABLE IF NOT EXISTS contactAddress
+  db.run(`CREATE TABLE IF NOT EXISTS contactGroup
   (
-      contactAddress INTEGER PRIMARY KEY NOT NULL,
-      contactId INTEGER REFERENCES contacts(id),
-      addressId INTEGER REFERENCES addresses(id)
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      contactId INTEGER,
+      groupId INTEGER
   )`, () => {
     console.log('CREATE TABLE contactsAddress Berhasil')
   })
 })
+
+// `CREATE TABLE IF NOT EXISTS contactGroup
+// (
+//     id INTEGER PRIMARY KEY AUTOINCREMENT,
+//     contactId INTEGER REFERENCES contacts(id),
+//     groupId INTEGER REFERENCES groups(id)
+// )`
