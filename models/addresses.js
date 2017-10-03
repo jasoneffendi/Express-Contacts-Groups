@@ -100,8 +100,16 @@ class Address {
         })
     }
 
+    static selectBycontact(params, callback) {
+        let query = `SELECT * FROM addresses WHERE idContacts = ${params}`
+        db.all(query, (err,rows) => {
+            callback(rows)
+        })
+    }
+
     getContactName() {
-        modelContacts.selectById(this.id,(datas) => {
+        modelContacts.selectById(this.idContacts,(datas) => {
+            console.log(datas)
             return this.name = datas[0].name
             // return this.name = 'Halo'
         })

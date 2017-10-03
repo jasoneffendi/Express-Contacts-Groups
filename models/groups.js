@@ -1,22 +1,20 @@
 var sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database('db/database.db')
 var modelgroupContacts = require('../models/contactGroup.js')
+var modelContacts = require('../models/contact.js')
 
 class Group {
     constructor(data) {
         this.id = data.id
         this.name_of_group = data.name_of_group
-        // this.members = 'Halo'
-        // this.groupMembers()
-        this.members = '';
-        this.groupMembers()
+
+        this.members = this.groupMembers();
     }
 
     static getAllGroup(callback) {
         let query = `SELECT * FROM groups`
         db.all(query, (err,rows) => {
             let groups = rows.map(d => new Group(d))
-            console.log("=========",groups)
            callback(groups)
         
         })
@@ -60,19 +58,17 @@ class Group {
     }
 
     groupMembers() {
-        let arr = []
+        var temp = [];
         modelgroupContacts.getContactName(this.id, (data) => {
-            // console.log(data)
-           data.forEach(d => {
-               arr.push(d)
+           data.forEach((d, idx) => {
+                modelContacts.selectById(d.contactId,(datas) => {  
+                    temp.push(datas[0].name)
+                    if(idx >= data.length - 1) {
+                        this.members = temp;                   
+                    }
+                })
            })
-        //    console.log(arr)
-           this.members = arr[0].id  
         })
-        // modelgroupContacts.getAll((data) => {
-        //     console.log('bangke')
-        //     console.log(data)
-        // })
     }
     
     

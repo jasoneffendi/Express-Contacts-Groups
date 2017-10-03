@@ -58,10 +58,6 @@ class Profile {
         })
     }
 
-    // getContactName(atr, key, callback) {
-        
-    // }
-
 }
 
 

@@ -2,11 +2,16 @@ let express = require('express')
 let router = express.Router()
 let modelGroups = require('../models/groups.js')
 let modelContacts = require('../models/contact.js')
+var modelgroupContacts = require('../models/contactGroup.js')
 
 router.get('/', (req,res) => {
     modelGroups.getAllGroup((rows) => {
-        // res.render('groups',{data: rows, title: 'Halaman Groups'})
-        res.send(rows)
+        modelContacts.getAll((contacts) => {
+            modelgroupContacts.getAll((data) => {
+                // res.send(rows)
+                res.render('groups',{data: rows, title: 'Halaman Groups'})
+            })
+        })
     })
 })
 

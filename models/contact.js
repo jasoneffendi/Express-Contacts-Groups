@@ -37,7 +37,8 @@ class Contact {
     static selectById(params, callback) {
         let query = `SELECT * FROM contacts WHERE id = ${params}`
         db.all(query, (err,rows) => {
-            callback(rows)
+             let contacts = rows.map(d => new Contact(d))
+           callback(contacts)
         })
     }
 

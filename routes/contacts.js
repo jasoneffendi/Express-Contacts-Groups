@@ -1,6 +1,7 @@
 let express = require('express')
 let router = express.Router()
 let modelContacts = require('../models/contact.js')
+let modelAddress = require('../models/addresses.js')
 
 // router.get('/', (req,res) => {
 //     modelContacts.getAll((rows) => {
@@ -27,7 +28,10 @@ router.get('/', (req,res) => {
                 contact.getProfileName(datas => {    
                     contact.profile = datas
                     counter++
-                    if (counter === limit) return res.render('contacts',{data: rows, title: 'Halaman Contact'})             
+                    if (counter === limit) {
+                        // return res.send(rows)
+                        return res.render('contacts',{data: rows, title: 'Halaman Contact'})
+                    }             
                 })
             } 
         })
@@ -61,4 +65,12 @@ router.post('/edit/:id', (req, res) => {
     })
 })
 
+router.get('/show/:id', (req,res) => {
+    modelAddress.selectBycontact(req.params.id ,(rows) => {
+        modelContacts.getAll((dataContact) => {
+            console.log(dataContact)
+            res.render('showAddress',{data: rows,dataContact: dataContact, title: 'Halaman Addresses'})            
+        })
+    })
+})
 module.exports = router

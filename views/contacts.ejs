@@ -28,7 +28,8 @@
                     <td><%=row.company%></td>
                     <td><%=row.telp%></td>
                     <td><%=row.email%></td>
-                    <td><%=row.profile[0].username%></td>
+                    
+                    <%if(row.profile[0] !== undefined) {%><td><%=row.profile[0].username%></td><%} else {%><td>No Profile</td><%}%>
                     <td>
                         <a href="/contacts/edit/<%=row.id%>">Edit</a>
                         <a href="/contacts/delete/<%=row.id%>">Delete</a>
