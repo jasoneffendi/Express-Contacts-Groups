@@ -11,17 +11,40 @@ class Profile {
         this.name = data.name;
     }
 
+    // static getAll(callback) {
+    //     let query = `SELECT * FROM profile`
+    //     db.all(query, (err,rows) => {
+    //         let profile = rows.map(d => new Profile(d))
+    //        callback(profile)
+    //     })
+    // }
+
     static getAll(callback) {
-        // let query = `SELECT profile.id,profile.username,profile.password,
-        //             profile.idContacts,contacts.name 
-        //             FROM profile LEFT JOIN contacts ON profile.idContacts = contacts.id`
         let query = `SELECT * FROM profile`
-        db.all(query, (err,rows) => {
-            let profile = rows.map(d => new Profile(d))
-           callback(profile)
-        
+        return new Promise((resolve,reject) => {
+            db.all(query, (err,rows) => {
+                let profile = rows.map(d => new Profile(d))
+               if(!err) {
+                   resolve(profile)
+               } else {
+                   reject(err)
+               }
+            })
         })
     }
+
+    // static createProfile(params, callback) {
+    //     var value = params.idContacts;
+    //     var split = value.split(",");
+    //     var v1 = split[0];
+    //     var v2 = split[1];
+    //     console.log(split[0])
+    //     let query = `INSERT INTO profile (username,password,idContacts,name) VALUES
+    //     ('${params.username}', '${params.password}', '${v1}', '${v2}')`
+    //     db.run(query, (err) => {
+    //         callback(err)
+    //     })
+    // }
 
     static createProfile(params, callback) {
         var value = params.idContacts;
@@ -31,22 +54,75 @@ class Profile {
         console.log(split[0])
         let query = `INSERT INTO profile (username,password,idContacts,name) VALUES
         ('${params.username}', '${params.password}', '${v1}', '${v2}')`
-        db.run(query, (err) => {
-            callback(err)
+        return new Promise((resolve,reject) => {
+            db.run(query, (err) => {
+                if(!err) {
+                    resolve()
+                } else {
+                    reject(err)
+                }
+            })
         })
     }
 
     static deleteProfile(params, callback) {
         let query = `DELETE FROM profile WHERE id = ${params}`
-        db.run(query, () => {
-            callback()
+        // db.run(query, () => {
+        //     callback()
+        // })
+
+        return new Promise((resolve,reject) => {
+            db.run(query, (err,params) => {
+                if(!err) {
+                    resolve()
+                } else {
+                    reject(err)
+                }
+            })
         })
     }
 
     static selectByContactId(params, callback) {
+        // console.log(params)
         let query = `SELECT * FROM profile WHERE idContacts = ${params}`
         db.all(query, (err,rows) => {
-                callback(rows)
+            console.log(rows)
+            callback(rows)
+        })
+
+        // return new Promise((resolve,reject) => {
+        //     db.all(query, (err,rows) => {
+        //         if(!err) {
+        //             resolve(rows)
+        //         } else {
+        //             reject(err)
+        //         }
+        //     })
+        // })
+    }
+
+    static selectByProfileId(params, callback) {
+        let query = `SELECT * FROM profile WHERE id = ${params}`
+        db.all(query, (err,rows) => {
+            console.log(rows)
+            callback(rows)
+        })
+    }
+
+    static selectByProfileId(params, callback) {
+        let query = `SELECT * FROM profile WHERE id = ${params}`
+        // db.all(query, (err,rows) => {
+        //     console.log(rows)
+        //     callback(rows)
+        // })
+         return new Promise((resolve,reject) => {
+            db.all(query, (err,rows) => {
+                if(!err) {
+                    resolve(rows)
+                } else {
+                    reject(err)
+                }
+            })
         })
     }
 

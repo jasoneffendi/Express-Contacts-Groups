@@ -14,19 +14,19 @@ class Address {
 
     static getAll(callback) {
         let query = `SELECT * FROM addresses`
-        // return new Promise((resolve,reject) => {
-        //     db.all(query, (err,rows) => {
-        //         if(!err){
-        //             resolve(rows)
-        //         } else {
-        //             reject(err)
-        //         }
-        //     })
-        // })
-        db.all(query, (err, rows) => {
-            let address = rows.map(d => new Address(d))
-            callback(address)
+        return new Promise((resolve,reject) => {
+            db.all(query, (err,rows) => {
+                if(!err){
+                    resolve(rows)
+                } else {
+                    reject(err)
+                }
+            })
         })
+        // db.all(query, (err, rows) => {
+        //     let address = rows.map(d => new Address(d))
+        //     callback(address)
+        // })
     }
 
     // static createAddress(params) {

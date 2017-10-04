@@ -3,22 +3,6 @@ let router = express.Router()
 let modelContacts = require('../models/contact.js')
 let modelAddress = require('../models/addresses.js')
 
-// router.get('/', (req,res) => {
-//     modelContacts.getAll((rows) => {
-//         let limit = rows.length
-//         let counter = 0
-//         rows.forEach(function(contact) {
-//             if (counter < limit) {
-//                 contact.getProfileName(datas => {    
-//                     contact.profile = datas
-//                     counter++
-//                     if (counter === limit) return res.render('contacts',{data: rows, title: 'Halaman Contact'})             
-//                 })
-//             } 
-//         })
-//     })
-// })
-
 router.get('/', (req,res) => {
     modelContacts.getAll((rows) => {
         let limit = rows.length
@@ -29,13 +13,12 @@ router.get('/', (req,res) => {
                     contact.profile = datas
                     counter++
                     if (counter === limit) {
-                        // return res.send(rows)
-                        return res.render('contacts',{data: rows, title: 'Halaman Contact'})
+                        return res.send(rows)
+                        // return res.render('contacts',{data: rows, title: 'Halaman Contact'})
                     }             
                 })
             } 
         })
-        // res.render('contacts',{data: rows, title: 'Halaman Contacts'})
     })
 })
 

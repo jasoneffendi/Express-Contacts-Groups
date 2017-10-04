@@ -1,6 +1,8 @@
 var sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database('db/database.db')
 var modelProfile = require('../models/profile.js')
+let modelGroup = require('../models/groups.js')
+
 
 class Contact {
     constructor(data) {
@@ -9,13 +11,33 @@ class Contact {
         this.company = data.company
         this.telp = data.telp
         this.email = data.email
+        this.group = this.getGroupname()
     }
 
-    static getAll(callback) {
+    // static getAll(callback) {
+    //     let query = `SELECT * FROM contacts`
+    //     db.all(query, (err,rows) => {
+    //         let contacts = rows.map(d => new Contact(d))
+    //        callback(contacts)
+    //     })
+    // }
+
+    static getAll() {
         let query = `SELECT * FROM contacts`
-        db.all(query, (err,rows) => {
-            let contacts = rows.map(d => new Contact(d))
-           callback(contacts)
+        // db.all(query, (err,rows) => {
+        //     let contacts = rows.map(d => new Contact(d))
+        //    callback(contacts)
+        // })
+
+        return new Promise ((resolve,reject) => {
+            db.all(query, (err,rows) => {
+                let contacts = rows.map(d => new Contact(d))
+                if(!err) {
+                    resolve(contacts)
+                } else {
+                    reject(err)
+                }
+            })
         })
     }
 
@@ -74,6 +96,10 @@ class Contact {
         })
     }
 
+    getGroupname() {
+        // modelGroup.
+        return 'halo'
+    }
 }
 
 
