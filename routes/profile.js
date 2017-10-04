@@ -95,7 +95,12 @@ router.get('/edit/:id', (req,res) => {
 })
 
 router.post('/edit/:id', (req, res) => {
-    modelProfile.updateProfile(req.body, req.params.id, () => {
+    // modelProfile.updateProfile(req.body, req.params.id, () => {
+    //     res.redirect('/profile')
+    // })
+
+    modelProfile.updateProfile(req.body,req.params.id)
+    .then(() => {
         res.redirect('/profile')
     })
 })

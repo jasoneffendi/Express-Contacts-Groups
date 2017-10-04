@@ -7,38 +7,74 @@ class Group {
     constructor(data) {
         this.id = data.id
         this.name_of_group = data.name_of_group
-
-        this.members = this.groupMembers();
+        // this.members = this.groupMembers();
     }
 
     static getAllGroup(callback) {
         let query = `SELECT * FROM groups`
-        db.all(query, (err,rows) => {
-            let groups = rows.map(d => new Group(d))
-           callback(groups)
-        
+        // db.all(query, (err,rows) => {
+        //     let groups = rows.map(d => new Group(d))
+        //    callback(groups)
+        // })
+        return new Promise((resolve,reject) => {
+            db.all(query, (err,rows) => {
+                let result = rows.map(d => new Group(d))
+               if(!err) {
+                   resolve(result)
+               } else {
+                   reject(err)
+               }
+            })
         })
     }
 
     static createGroup(params, callback) {
         let query = `INSERT INTO groups (name_of_group) VALUES
         ('${params.name_of_group}')`
-        db.run(query, () => {
-            callback()
+        // db.run(query, () => {
+        //     callback()
+        // })
+        return new Promise((resolve,reject) => {
+            db.all(query, (err) => {
+               if(!err) {
+                   resolve()
+               } else {
+                   reject(err)
+               }
+            })
         })
     }
 
     static deleteGroup(params, callback) {
         let query = `DELETE FROM groups WHERE id = ${params}`
-        db.run(query, () => {
-            callback()
+        // db.run(query, () => {
+        //     callback()
+        // })
+        return new Promise((resolve,reject) => {
+            db.all(query, (err) => {
+               if(!err) {
+                   resolve()
+               } else {
+                   reject(err)
+               }
+            })
         })
     }
 
     static selectByGroupId(params, callback) {
         let query = `SELECT * FROM groups WHERE id = ${params}`
-        db.all(query, (err,rows) => {
-            callback(rows)
+        // db.all(query, (err,rows) => {
+        //     callback(rows)
+        // })
+
+        return new Promise((resolve,reject) => {
+            db.all(query, (err,rows) => {
+               if(!err) {
+                   resolve(rows)
+               } else {
+                   reject(err)
+               }
+            })
         })
     }
 

@@ -101,13 +101,13 @@ class Profile {
         // })
     }
 
-    static selectByProfileId(params, callback) {
-        let query = `SELECT * FROM profile WHERE id = ${params}`
-        db.all(query, (err,rows) => {
-            console.log(rows)
-            callback(rows)
-        })
-    }
+    // static selectByProfileId(params, callback) {
+    //     let query = `SELECT * FROM profile WHERE id = ${params}`
+    //     db.all(query, (err,rows) => {
+    //         console.log(rows)
+    //         callback(rows)
+    //     })
+    // }
 
     static selectByProfileId(params, callback) {
         let query = `SELECT * FROM profile WHERE id = ${params}`
@@ -129,8 +129,18 @@ class Profile {
     static updateProfile(params, id, callback) {
         let query = `UPDATE profile SET username = '${params.username}', password = '${params.password}'
         WHERE id = ${id}`
-        db.run(query, () => {
-            callback()
+        // db.run(query, () => {
+        //     callback()
+        // })
+
+        return new Promise((resolve,reject) => {
+            db.all(query, (err,rows) => {
+                if(!err) {
+                    resolve()
+                } else {
+                    reject(err)
+                }
+            })
         })
     }
 

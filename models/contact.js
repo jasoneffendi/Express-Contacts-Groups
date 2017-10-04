@@ -44,31 +44,72 @@ class Contact {
     static createPost(params, callback) {
         let query = `INSERT INTO contacts (name,company,telp,email) VALUES
         ('${params.name}', '${params.company}', '${params.telp}', '${params.email}')`
-        db.run(query, () => {
-            callback()
+        // db.run(query, () => {
+        //     callback()
+        // })
+
+        return new Promise((resolve,reject) => {
+            db.run(query, (err) => {
+                if(!err) {
+                    resolve()
+                } else {
+                    reject()
+                }
+            })
         })
     }
 
     static deleteContact(params, callback) {
         let query = `DELETE FROM contacts WHERE id = ${params}`
-        db.run(query, () => {
-            callback()
+        // db.run(query, () => {
+        //     callback()
+        // })
+
+        return new Promise((resolve,reject) => {
+            db.run(query, (err) => {
+                if(!err) {
+                    resolve()
+                } else {
+                    reject()
+                }
+            })
         })
     }
 
     static selectById(params, callback) {
         let query = `SELECT * FROM contacts WHERE id = ${params}`
-        db.all(query, (err,rows) => {
-             let contacts = rows.map(d => new Contact(d))
-           callback(contacts)
+        // db.all(query, (err,rows) => {
+        //      let contacts = rows.map(d => new Contact(d))
+        //    callback(contacts)
+        // })
+
+        return new Promise ((resolve,reject) => {
+            db.all(query, (err,rows) => {
+                let contacts = rows.map(d => new Contact(d))
+                if(!err) {
+                    resolve(contacts)
+                } else {
+                    reject(err)
+                }
+            })
         })
     }
 
     static updateContact(params, id, callback) {
         let query = `UPDATE contacts SET name = '${params.name}', company = '${params.company}',
         telp = '${params.telp}', email = '${params.email}' WHERE id = ${id}`
-        db.run(query, () => {
-            callback()
+        // db.run(query, () => {
+        //     callback()
+        // })
+
+        return new Promise((resolve,reject) => {
+            db.run(query, (err) => {
+                if(!err) {
+                    resolve()
+                } else {
+                    reject()
+                }
+            })
         })
     }
 
@@ -98,7 +139,7 @@ class Contact {
 
     getGroupname() {
         // modelGroup.
-        return 'halo'
+        // return 'halo'
     }
 }
 
